@@ -6,6 +6,9 @@ from langchain_groq import ChatGroq
 from rouge_score import rouge_scorer
 from dotenv import load_dotenv
 import os
+import nltk
+nltk.download('wordnet')
+
 
 # Load environment variables from the .env file
 load_dotenv()
