@@ -9,3 +9,5 @@ torch
 scikit-learn
 PyCryptodome
 groq
+nltk
+python-dotenv
