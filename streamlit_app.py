@@ -4,16 +4,26 @@ import pickle
 import ast
 from langchain_groq import ChatGroq
 from rouge_score import rouge_scorer
+from dotenv import load_dotenv
+import os
+
+# Load environment variables from the .env file
+load_dotenv()
+
+# Retrieve the API keys from the environment
+groq_api_key = os.getenv('GROQ_API_KEY')
+langchain_api_key = os.getenv('LANGCHAIN_API_KEY')
 
 # Load the model configuration
 with open('model_config.pkl', 'rb') as config_file:
     model_config = pickle.load(config_file)
 
-# Initialize the model with the API key
+# Initialize the model with the API keys
 model = ChatGroq(
     model=model_config['model_name'], 
     max_tokens=model_config['max_tokens'], 
-    groq_api_key="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"  # Replace with your actual API key
+    groq_api_key=groq_api_key,  # Loaded from the .env file
+    langchain_api_key=langchain_api_key  # Loaded from the .env file
 )
 
 # Streamlit app
@@ -66,6 +76,3 @@ if uploaded_file is not None:
             st.write("ROUGE-1:", scores['rouge1'])
             st.write("ROUGE-2:", scores['rouge2'])
             st.write("ROUGE-L:", scores['rougeL'])
-
-# Run the app with:
-# streamlit run app.py
