@@ -7,8 +7,8 @@ from rouge_score import rouge_scorer
 from dotenv import load_dotenv
 import os
 import nltk
-nltk.download('wordnet')
 
+nltk.download('wordnet')
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -21,13 +21,14 @@ langchain_api_key = os.getenv('LANGCHAIN_API_KEY')
 with open('model_config.pkl', 'rb') as config_file:
     model_config = pickle.load(config_file)
 
-# Initialize the model with the API keys
+# Initialize the model with the required configuration
 model = ChatGroq(
     model=model_config['model_name'], 
-    max_tokens=model_config['max_tokens'], 
-    groq_api_key=groq_api_key,  # Loaded from the .env file
-    langchain_api_key=langchain_api_key  # Loaded from the .env file
+    max_tokens=model_config['max_tokens']
 )
+
+# Optionally, set the API keys if they are needed by the model
+model.set_api_keys(groq_api_key=groq_api_key, langchain_api_key=langchain_api_key)
 
 # Streamlit app
 st.title("Medical Report Summarization")
